@@ -1,5 +1,6 @@
 package com.hckim.geoquizre;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button mTrueButton; // (1)
     private Button mFalseButton; // (1)'
     private Button mNextButton; // (4)
+    private Button mCheatButton; // B(1)
     private TextView mQuestionTextView; // (4)'
 
     private Question[] mQuestionBank = new Question[]{ // (5)
@@ -64,6 +66,16 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        mCheatButton = (Button) findViewById(R.id.cheat_button); // B(2)
+        mCheatButton.setOnClickListener(new View.OnClickListener() { // B(3)
+            @Override
+            public void onClick(View v) {
+                // CheatActivity가 시작되는 곳
+                Intent intent = new Intent(QuizActivity.this, CheatActivity.class); // B(4)
+                startActivity(intent);
+            }
+        });
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view); // (6)
 //        int question = mQuestionBank[mCurrentIndex].getmTextResId(); // (8)의 결과
