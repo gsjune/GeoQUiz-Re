@@ -33,6 +33,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button mNextButton; // (4)
     private Button mCheatButton; // B(1)
     private TextView mQuestionTextView; // (4)'
+    private static final int REQUEST_CODE_CHEAT = 0; // C(1)
 
     private Question[] mQuestionBank = new Question[]{ // (5)
             new Question(R.string.question_oceans, true),
@@ -75,7 +76,8 @@ public class QuizActivity extends AppCompatActivity {
 //                Intent intent = new Intent(QuizActivity.this, CheatActivity.class); // B(4)
                 boolean answerIsTrue = mQuestionBank[mCurrentIndex].ismAnswerTrue(); // B(5) B(4)가 B(5) 두 줄로 대체
                 Intent intent = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
-                startActivity(intent);
+//                startActivity(intent); // C(2)로 변경
+                startActivityForResult(intent, REQUEST_CODE_CHEAT); // C(2)
             }
         });
 
