@@ -27,12 +27,12 @@ strings.xml: 문자열 변경, next_button과 question_ocean 등 문자열 5개 
 
 public class QuizActivity extends AppCompatActivity {
 
-    private Button mTrueButton;
-    private Button mFalseButton;
-    private Button mNextButton;
-    private TextView mQuestionTextView;
+    private Button mTrueButton; // (1)
+    private Button mFalseButton; // (1)'
+    private Button mNextButton; // (4)
+    private TextView mQuestionTextView; // (4)'
 
-    private Question[] mQuestionBank = new Question[]{
+    private Question[] mQuestionBank = new Question[]{ // (5)
             new Question(R.string.question_oceans, true),
             new Question(R.string.question_mideast, false),
             new Question(R.string.question_africa, false),
@@ -40,30 +40,40 @@ public class QuizActivity extends AppCompatActivity {
             new Question(R.string.question_asia, true)
     };
 
-    private int mCurrentIndex = 0;
+    private int mCurrentIndex = 0; // (5)'
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+        mQuestionTextView = (TextView) findViewById(R.id.question_text_view); // (6)
         int question = mQuestionBank[mCurrentIndex].getmTextResId();
         mQuestionTextView.setText(question);
 
-        mTrueButton = (Button) findViewById(R.id.true_button);
-        mTrueButton.setOnClickListener(new View.OnClickListener() {
+        mTrueButton = (Button) findViewById(R.id.true_button); // (2)
+        mTrueButton.setOnClickListener(new View.OnClickListener() { // (3)
             @Override
             public void onClick(View v) {
                 Toast.makeText(QuizActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
             }
         });
 
-        mFalseButton = (Button) findViewById(R.id.false_button);
-        mFalseButton.setOnClickListener(new View.OnClickListener() {
+        mFalseButton = (Button) findViewById(R.id.false_button); // (2)'
+        mFalseButton.setOnClickListener(new View.OnClickListener() { // (3)'
             @Override
             public void onClick(View v) {
                 Toast.makeText(QuizActivity.this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mNextButton = (Button) findViewById(R.id.next_button);
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                int question = mQuestionBank[mCurrentIndex].getmTextResId();
+                mQuestionTextView.setText(question);
             }
         });
     }
