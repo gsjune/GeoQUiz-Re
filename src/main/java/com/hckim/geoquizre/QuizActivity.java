@@ -72,7 +72,9 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // CheatActivity가 시작되는 곳
-                Intent intent = new Intent(QuizActivity.this, CheatActivity.class); // B(4)
+//                Intent intent = new Intent(QuizActivity.this, CheatActivity.class); // B(4)
+                boolean answerIsTrue = mQuestionBank[mCurrentIndex].ismAnswerTrue(); // B(5) B(4)가 B(5) 두 줄로 대체
+                Intent intent = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
                 startActivity(intent);
             }
         });
