@@ -7,6 +7,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+// 컨트롤러 클래스
+// 모델 클래스 Question 클래스: 두 개의 데이터(질문 텍스트와 정답). 값을 알려주는 게터 메소드와 값을 변경하는 세터 메소드가 필요
+// 뷰(레이아웃)
+// 스트링
+
+/*
+activity_quiz.xml: TextView 1개, Button 2개
+QuizActivity.java: private Button 2개 -> m...Button = (Button) findViewId 2개 -> 각각 setOnClickListener 및 Override -> Toast
+Question.java: class Question -> private int mTextResId, private boolean mAnswerTrue -> Constructor 및 getter and setter
+strings.xml: 문자열 변경, next_button과 question_ocean 등 문자열 5개 추가
+컨트롤러: 변수들과 Question 객체 배열 추가 -> TextView를 코드와 연결하기(mQuestionBank, mCurrentIndex, Question의 접근자 메소드 사용)
+ */
+
+/**
+ * activity_quiz.xml의 Button, TextView 등 QuizActivity.java에서 private 전역변수(strings.xml도)
+ *
+ */
+
 public class QuizActivity extends AppCompatActivity {
 
     private Button mTrueButton;
@@ -28,6 +46,10 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+        int question = mQuestionBank[mCurrentIndex].getmTextResId();
+        mQuestionTextView.setText(question);
 
         mTrueButton = (Button) findViewById(R.id.true_button);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
