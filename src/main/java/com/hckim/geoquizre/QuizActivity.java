@@ -47,6 +47,19 @@ public class QuizActivity extends AppCompatActivity {
         mQuestionTextView.setText(question);
     }
 
+    private void checkAnswer(boolean userPressedTrue) { // (10)
+        boolean answerIsTrue = mQuestionBank[mCurrentIndex].ismAnswerTrue();
+
+        int messageReId = 0;
+
+        if (userPressedTrue == answerIsTrue) {
+            messageReId = R.string.correct_toast;
+        } else {
+            messageReId = R.string.incorrect_toast;
+        }
+        Toast.makeText(this, messageReId, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +73,8 @@ public class QuizActivity extends AppCompatActivity {
         mTrueButton.setOnClickListener(new View.OnClickListener() { // (3)
             @Override
             public void onClick(View v) {
-                Toast.makeText(QuizActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(QuizActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show(); // (10)의 결과
+                checkAnswer(true); // (11)
             }
         });
 
@@ -68,7 +82,8 @@ public class QuizActivity extends AppCompatActivity {
         mFalseButton.setOnClickListener(new View.OnClickListener() { // (3)'
             @Override
             public void onClick(View v) {
-                Toast.makeText(QuizActivity.this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(QuizActivity.this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show(); // (10)의 결과
+                checkAnswer(false); // (12)
             }
         });
 
