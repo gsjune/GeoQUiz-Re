@@ -1,5 +1,6 @@
 package com.hckim.geoquizre;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button mCheatButton; // B(1)
     private TextView mQuestionTextView; // (4)'
     private static final int REQUEST_CODE_CHEAT = 0; // C(1)
+    private boolean mIsCheater; // D(1)
 
     private Question[] mQuestionBank = new Question[]{ // (5)
             new Question(R.string.question_oceans, true),
@@ -55,10 +57,14 @@ public class QuizActivity extends AppCompatActivity {
 
         int messageReId = 0;
 
-        if (userPressedTrue == answerIsTrue) {
-            messageReId = R.string.correct_toast;
+        if (mIsCheater) { // D(3) 수정
+            messageReId = R.string.judgment_toast;
         } else {
-            messageReId = R.string.incorrect_toast;
+            if (userPressedTrue == answerIsTrue) {
+                messageReId = R.string.correct_toast;
+            } else {
+                messageReId = R.string.incorrect_toast;
+            }
         }
         Toast.makeText(this, messageReId, Toast.LENGTH_SHORT).show();
     }
@@ -113,5 +119,19 @@ public class QuizActivity extends AppCompatActivity {
                 updateQuestion(); // (9)
             }
         });
+    }
+
+    @Override // D(2)
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            if (data == null) {
+                return;
+            }
+            mIsCheater = CheatActivity.wasAnswerShown(data);
+        }
     }
 }
