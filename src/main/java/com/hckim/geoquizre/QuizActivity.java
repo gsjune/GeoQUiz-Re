@@ -42,14 +42,19 @@ public class QuizActivity extends AppCompatActivity {
 
     private int mCurrentIndex = 0; // (5)'
 
+    private void updateQuestion() { // (8) 하나의 메소드로
+        int question = mQuestionBank[mCurrentIndex].getmTextResId();
+        mQuestionTextView.setText(question);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view); // (6)
-        int question = mQuestionBank[mCurrentIndex].getmTextResId();
-        mQuestionTextView.setText(question);
+//        int question = mQuestionBank[mCurrentIndex].getmTextResId(); // (8)의 결과
+//        mQuestionTextView.setText(question);
 
         mTrueButton = (Button) findViewById(R.id.true_button); // (2)
         mTrueButton.setOnClickListener(new View.OnClickListener() { // (3)
@@ -67,13 +72,14 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mNextButton = (Button) findViewById(R.id.next_button);
+        mNextButton = (Button) findViewById(R.id.next_button); // (7)
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                int question = mQuestionBank[mCurrentIndex].getmTextResId();
-                mQuestionTextView.setText(question);
+//                int question = mQuestionBank[mCurrentIndex].getmTextResId(); // (8)의 결과
+//                mQuestionTextView.setText(question);
+                updateQuestion(); // (9)
             }
         });
     }
